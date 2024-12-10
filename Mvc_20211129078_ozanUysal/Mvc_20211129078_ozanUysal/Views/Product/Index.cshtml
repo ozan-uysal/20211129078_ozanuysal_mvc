@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@section CardHeader{
+    <div style="display:flex; justify-content:space-between;">
+        <span>Products</span>
+        <a asp-action="Add" asp-controller="Category" class="btn btn-primary btn-sm mb-2">Add</a>
+    </div>
+
+}
+@model List<ProductModel>
+
+<a asp-action="Add" asp-controller="Product" class="btn btn-primary btn-sm mb-2">Add</a>
+
+@if (Model.Count == 0)
+{
+    @* <div class="alert alert-danger col-md-4 mb-2">Henüz Ürün Eklenmedi!</div> *@
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Status</td>
+            <th>Adding</th>
+            <th>Updating</th>
+            <td>Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    @if (product.IsActive)
+                    {
+                        <span class="badge bg-success text-white">Aktif</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger text-white">Pasif</span>
+                    }
+
+
+                </td>
+                <td>@product.Created</td>
+                <td>@product.Updated</td>
+                <td>
+                    <a asp-action="Update" asp-controller="Product" class="btn btn-primary btn-sm" asp-route-id="@product.Id">Edit</a>
+                    <a asp-action="Delete" asp-controller="Product" class="btn btn-danger btn-sm" asp-route-id="@product.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
